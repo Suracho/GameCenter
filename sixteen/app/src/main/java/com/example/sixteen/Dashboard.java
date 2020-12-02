@@ -124,10 +124,6 @@ public class Dashboard extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-
-//                   afa if (addresses.size() > 0) {
-//                        location.setText(addresses.get(0).getLocality());
-//                    }
                 }
             } catch (Exception e) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
@@ -147,7 +143,7 @@ public class Dashboard extends AppCompatActivity {
         final String user_name = intent.getStringExtra("name");
         final String user_email = intent.getStringExtra("email");
         final String user_password = intent.getStringExtra("password");
-        final String address = pata; ;
+        final String address = pata;
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,6 +175,7 @@ public class Dashboard extends AppCompatActivity {
         final ProgressBar p = findViewById(R.id.progressbar);
 
 
+
         p.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -190,6 +187,7 @@ public class Dashboard extends AppCompatActivity {
         StorageReference imageRef = mStorageRef.child("image/" + random);
         rootNode = FirebaseDatabase.getInstance();
         final String[] url = new String[1];
+//        rootNode = FirebaseDatabase.getInstance();
 
 
         byte[] b = stream.toByteArray();
@@ -205,9 +203,10 @@ public class Dashboard extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 Uri downloadUri = uri;
                                 url[0] = String.valueOf(downloadUri);
-                                reference = rootNode.getReference(url[0].replace("/","").replace("%","").replace(".","").replace("#","").replace("$","").replace("[","").replace("]",""));
+                                reference = rootNode.getReference("pics");
+                                url[0] = url[0].replace("/","").replace("%","").replace(".","").replace("#","").replace("$","").replace("[","").replace("]","");
                                 ImageHelp imageHelp = new ImageHelp(name,username,address,email,url[0]);
-                                reference.setValue(imageHelp);
+                                reference.child(url[0]).setValue(imageHelp);
                                 Toast.makeText(Dashboard.this, "Photo Uploaded and address is "+address + "and url is "+url[0] , Toast.LENGTH_SHORT).show();
                             }
 
