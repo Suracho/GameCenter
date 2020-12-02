@@ -26,7 +26,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         view = itemView;
     }
 
-    public void setDetails(Context context,String image,String username,String address){
+    public void setDetails(Context context,String address,String email,String name,String image,String username){
 
         ImageView imageView = itemView.findViewById(R.id.rImageView);
         TextView usernameTextView = itemView.findViewById(R.id.UsernameView);

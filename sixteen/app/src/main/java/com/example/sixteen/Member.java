@@ -1,7 +1,7 @@
 package com.example.sixteen;
 
 public class Member {
-    String image,username,address;
+    String image,username,address,email,name;
 
     public String getUsername() {
         return username;
@@ -30,9 +30,27 @@ public class Member {
         this.image = image;
     }
 
-    public Member(String image, String username, String address) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Member(String address, String email, String name, String image, String username) {
         this.image = image;
         this.username = username;
         this.address = address;
+        this.email = email;
+        this.name = name;
     }
 }

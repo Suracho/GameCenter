@@ -45,11 +45,13 @@ import java.util.UUID;
 
 public class Dashboard extends AppCompatActivity {
 
-     Button camera;
-     Button upload;
-     Button buy;
-     ImageView photo;
-     Bitmap image;
+    Button camera;
+    Button upload;
+    Button buy;
+    ImageView photo;
+    private DatabaseReference reference;
+    private FirebaseDatabase rootNode;
+    Bitmap image;
     private LocationManager locationManager;
     double latitude;
     double longitude;
@@ -61,6 +63,7 @@ public class Dashboard extends AppCompatActivity {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
 
     private void gps_dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -95,7 +98,8 @@ public class Dashboard extends AppCompatActivity {
         upload = (Button)findViewById(R.id.upload);
         photo = (ImageView) findViewById(R.id.image);
         buy = (Button) findViewById(R.id.page);
-        List<Address> addresses = null;
+        List<Address> addresses ;
+        String pata = new String();
         if (!isLocationEnabled()) {
             gps_dialog();
         } else {
@@ -115,12 +119,13 @@ public class Dashboard extends AppCompatActivity {
 
                     try {
                         addresses = gcd.getFromLocation(latitude, longitude, 1);
+                        pata = addresses.get(0).getLocality();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                    assert addresses != null;
-//                    if (addresses.size() > 0) {
+
+//                   afa if (addresses.size() > 0) {
 //                        location.setText(addresses.get(0).getLocality());
 //                    }
                 }
@@ -142,7 +147,7 @@ public class Dashboard extends AppCompatActivity {
         final String user_name = intent.getStringExtra("name");
         final String user_email = intent.getStringExtra("email");
         final String user_password = intent.getStringExtra("password");
-        final String address = String.valueOf(addresses.get(0).getLocality());
+        final String address = pata; ;
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,8 +178,6 @@ public class Dashboard extends AppCompatActivity {
     private void upload(final String username, final String email, final String name, final String address) {
         final ProgressBar p = findViewById(R.id.progressbar);
 
-        FirebaseDatabase rootNode;
-        final DatabaseReference reference;
 
         p.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -186,7 +189,6 @@ public class Dashboard extends AppCompatActivity {
         final String random = UUID.randomUUID().toString();
         StorageReference imageRef = mStorageRef.child("image/" + random);
         rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("image");
         final String[] url = new String[1];
 
 
@@ -203,12 +205,13 @@ public class Dashboard extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 Uri downloadUri = uri;
                                 url[0] = String.valueOf(downloadUri);
+                                reference = rootNode.getReference(url[0].replace("/","").replace("%","").replace(".","").replace("#","").replace("$","").replace("[","").replace("]",""));
+                                ImageHelp imageHelp = new ImageHelp(name,username,address,email,url[0]);
+                                reference.setValue(imageHelp);
+                                Toast.makeText(Dashboard.this, "Photo Uploaded and address is "+address + "and url is "+url[0] , Toast.LENGTH_SHORT).show();
                             }
 
                         });
-                        ImageHelp imageHelp = new ImageHelp(name,username,address,email,url[0]);
-                        reference.child(url[0]).setValue(imageHelp);
-                        Toast.makeText(Dashboard.this, "Photo Uploaded and address is "+address + "and url is "+url[0] , Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

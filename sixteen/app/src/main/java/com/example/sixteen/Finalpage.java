@@ -59,7 +59,7 @@ public class Finalpage extends AppCompatActivity {
 
 
     RecyclerView recyclerView;
-    FirebaseDatabase database;
+
     DatabaseReference reference;
 
 
@@ -99,7 +99,7 @@ public class Finalpage extends AppCompatActivity {
                     @Override
                     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Member model) {
 
-                        holder.setDetails(getApplicationContext(),model.getImage(),model.getUsername(),model.getAddress());
+                        holder.setDetails(getApplicationContext(),model.getAddress(),model.getEmail(),model.getName(),model.getImage(),model.getUsername());
                         String name = getItem(position).getUsername();
                         String address = getItem(position).getAddress();
                         String url = getItem(position).getImage();
@@ -128,8 +128,8 @@ public class Finalpage extends AppCompatActivity {
                         return new ViewHolder(view);
                     }
                 };
-
-
+//
+//
         firebaseRecyclerAdapter2.startListening();
 //
 //         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
