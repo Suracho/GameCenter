@@ -21,7 +21,8 @@ public class Messages {
     }
 
     public String getEmail() {
-        return email;
+        String temp1 = "email: " + email + " username: " + username+ " location: " + location;
+        return temp1;
     }
 
     public void setEmail(String email) {
@@ -31,7 +32,7 @@ public class Messages {
     public String getLocation() {
         String temp1 = email + " " + username+ " " + location;
 
-        return temp1;
+        return location;
     }
 
     public void setLocation(String location) {
