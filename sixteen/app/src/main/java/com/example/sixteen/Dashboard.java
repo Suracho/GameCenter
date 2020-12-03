@@ -204,8 +204,8 @@ public class Dashboard extends AppCompatActivity {
                                 Uri downloadUri = uri;
                                 url[0] = String.valueOf(downloadUri);
                                 reference = rootNode.getReference("pics");
-                                url[0] = url[0].replace("/","").replace("%","").replace(".","").replace("#","").replace("$","").replace("[","").replace("]","");
                                 ImageHelp imageHelp = new ImageHelp(name,username,address,email,url[0]);
+                                url[0] = url[0].replace("/","").replace("%","").replace(".","").replace("#","").replace("$","").replace("[","").replace("]","");
                                 reference.child(url[0]).setValue(imageHelp);
                                 Toast.makeText(Dashboard.this, "Photo Uploaded and address is "+address + "and url is "+url[0] , Toast.LENGTH_SHORT).show();
                             }
