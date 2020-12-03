@@ -1,7 +1,8 @@
 package com.example.sixteen;
 
-public class Member {
-    String image,username,address,email,name;
+public class Messages {
+    //Model Class
+    String username,image,email,location;
 
     public String getUsername() {
         return username;
@@ -9,17 +10,6 @@ public class Member {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Member() {
     }
 
     public String getImage() {
@@ -38,19 +28,23 @@ public class Member {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getLocation() {
+        String temp1 = email + " " + username+ " " + location;
+
+        return temp1;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public Member(String address, String email, String name, String image, String username) {
-        this.image = image;
+    public Messages(String username, String image, String email, String location) {
         this.username = username;
-        this.address = address;
+        this.image = image;
         this.email = email;
-        this.name = name;
+        this.location = location;
+    }
+
+    public Messages() {
     }
 }
